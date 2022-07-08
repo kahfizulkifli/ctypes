@@ -16,13 +16,28 @@ except OSError:
 
 #Get string from mylib
 string = mylib.get_address()
-print(string)
+libc.puts(string)
 
 #Create mutable string 
-mut_str = ctypes.create_string_buffer(10)
-mut_str = b'Kahfi:'
+mut_str = ctypes.create_string_buffer(b"Kahfi:", 20)
+
 libc.puts(mut_str)
 
-#Modify with input from ctypes
-mut_str = mut_str + string
+p = ctypes.cast(ctypes.addressof(mut_str)+6, ctypes.POINTER(ctypes.c_char))
+
+libc.memmove(p, string, 15)
+
 libc.puts(mut_str)
+# libc.memset(mut_str, ctypes.c_wchar_p("K"), 1)
+# libc.puts(mut_str)
+
+# p = ctypes.cast(ctypes.addressof(mut_str) + 6, ctypes.POINTER(ctypes.c_char))
+
+# libc.memset(p, string, 1)
+# libc.puts(mut_str)
+
+# p = ctypes.cast(ctypes.addressof(mut_str) + 6, ctypes.POINTER(ctypes.c_char))
+
+# libc.memset(p, string, 1)
+
+# libc.puts(mut_str)
